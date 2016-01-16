@@ -7,6 +7,7 @@
 			<thead>
 				<tr>
 					<th width="1200">Project title</th>
+					<th>Tickets</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -14,6 +15,7 @@
 				{% for project in object_list %}
 				<tr>
 					<td>{{ project.title }}</td>
+					<td>{{ project.tickets.all|length }}</td>
 					<td>
 						<a href="{% url "project-update" project_id=project.pk %}">
 							<i class="fi-pencil"></i>
