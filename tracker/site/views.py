@@ -12,7 +12,8 @@ class ProjectContextMixin(object):
 
     def get_project(self):
         if not self.project:
-            self.project = get_object_or_404(Project, pk=self.kwargs['project_id'])
+            self.project = get_object_or_404(
+                Project, pk=self.kwargs['project_id'])
 
         return self.project
 
@@ -110,7 +111,8 @@ class CreateTicketView(ProjectContextMixin, CreateView):
     template_name = "site/ticket_form.html"
 
     def get_success_url(self):
-        return reverse("project-detail", kwargs={"project_id": self.kwargs['project_id']})
+        return reverse("project-detail",
+                       kwargs={"project_id": self.kwargs['project_id']})
 
     def get_form_kwargs(self):
         kwargs = super(CreateTicketView, self).get_form_kwargs()
@@ -130,7 +132,8 @@ class UpdateTicketView(ProjectContextMixin, UpdateView):
     template_name = "site/ticket_form.html"
 
     def get_success_url(self):
-        return reverse("project-detail", kwargs={"project_id": self.kwargs['project_id']})
+        return reverse("project-detail",
+                       kwargs={"project_id": self.kwargs['project_id']})
 
     def get_form_kwargs(self):
         kwargs = super(UpdateTicketView, self).get_form_kwargs()

@@ -10,9 +10,9 @@ from StringIO import StringIO
 from zipfile import ZipFile
 from urllib import urlopen
 
-REQUIREMENTS = [ "pip", "git" ]
+REQUIREMENTS = ["pip", "git"]
 
-FILES_IGNORED_FOR_DELETION = [ "google_appengine" ]
+FILES_IGNORED_FOR_DELETION = ["google_appengine"]
 
 PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 REQUIREMENTS_FILE = os.path.join(PROJECT_DIR, "requirements.txt")
@@ -30,15 +30,17 @@ DEPRECATED_SDK_REPO = "https://storage.googleapis.com/appengine-sdks/deprecated/
 
 
 if __name__ == "__main__":
-    #Make sure the user has everything they need
+    # Make sure the user has everything they need
     if platform.system() == 'Windows':
         for command in REQUIREMENTS:
             if not subprocess.check_output(["where", command]).strip():
-                raise RuntimeError("You must install the '%s' command" % command)
+                raise RuntimeError(
+                    "You must install the '%s' command" % command)
     else:
         for command in REQUIREMENTS:
             if not subprocess.check_output(["which", command]).strip():
-                raise RuntimeError("You must install the '%s' command" % command)
+                raise RuntimeError(
+                    "You must install the '%s' command" % command)
 
     if not os.path.exists(TARGET_DIR):
         print('Creating `sitepackages` directory for dependencies...')
@@ -47,20 +49,21 @@ if __name__ == "__main__":
     if not os.path.exists(APPENGINE_TARGET_DIR):
         print('Downloading the AppEngine SDK...')
 
-        #First try and get it from the 'featured' folder
+        # First try and get it from the 'featured' folder
         sdk_file = urlopen(FEATURED_SDK_REPO + APPENGINE_SDK_FILENAME)
         if sdk_file.getcode() == 404:
-            #Failing that, 'deprecated'
+            # Failing that, 'deprecated'
             sdk_file = urlopen(DEPRECATED_SDK_REPO + APPENGINE_SDK_FILENAME)
 
-        #Handle other errors
+        # Handle other errors
         if sdk_file.getcode() >= 299:
-            raise Exception('App Engine SDK could not be found. {} returned code {}.'.format(sdk_file.geturl(), sdk_file.getcode()))
+            raise Exception('App Engine SDK could not be found. {} returned code {}.'.format(
+                sdk_file.geturl(), sdk_file.getcode()))
 
         zipfile = ZipFile(StringIO(sdk_file.read()))
         zipfile.extractall(TARGET_DIR)
 
-        #Make sure the dev_appserver and appcfg are executable
+        # Make sure the dev_appserver and appcfg are executable
         for module in ("dev_appserver.py", "appcfg.py"):
             app = os.path.join(APPENGINE_TARGET_DIR, module)
             st = os.stat(app)
@@ -68,10 +71,10 @@ if __name__ == "__main__":
     else:
         print('Not updating SDK as it exists. Remove {} and re-run to get the latest SDK'.format(APPENGINE_TARGET_DIR))
 
-
-    #Remove all folders and files, we leave symlinks as they will be pointing
-    #to submodules
-    filenames = (filename for filename in os.listdir(TARGET_DIR) if filename not in FILES_IGNORED_FOR_DELETION)
+    # Remove all folders and files, we leave symlinks as they will be pointing
+    # to submodules
+    filenames = (filename for filename in os.listdir(TARGET_DIR)
+                 if filename not in FILES_IGNORED_FOR_DELETION)
     for filename in filenames:
         path = os.path.join(TARGET_DIR, filename)
         if os.path.isdir(path) and not os.path.islink(path):
