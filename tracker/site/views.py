@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
+from django.http import Http404
 from django.views.generic import TemplateView, CreateView, UpdateView, ListView
 
 from .forms import ProjectForm, TicketForm
@@ -135,9 +136,16 @@ class UpdateTicketView(ProjectContextMixin, UpdateView):
         return reverse("project-detail",
                        kwargs={"project_id": self.kwargs['project_id']})
 
+    def get_object(self, *args, **kwargs):
+        obj = super(UpdateTicketView, self).get_object(*args, **kwargs)
+        # If the project in the URL does not match the project of the ticket
+        if self.get_project() != obj.project:
+            raise Http404
+        return obj
+
     def get_form_kwargs(self):
         kwargs = super(UpdateTicketView, self).get_form_kwargs()
-        kwargs['project'] = self.project
+        kwargs['project'] = self.object.project
         kwargs['user'] = self.request.user
         kwargs['title'] = "Edit {0}".format(self.object.title)
         return kwargs
