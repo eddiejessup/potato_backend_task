@@ -8,7 +8,6 @@ from .views import (
     create_ticket_view,
     update_ticket_view,
     project_list_view,
-    update_project_view
 )
 
 
