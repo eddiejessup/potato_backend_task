@@ -8,3 +8,5 @@ nose
 six
 django-extensions
 crispy-forms-foundation
+django-select2-forms
+setuptools

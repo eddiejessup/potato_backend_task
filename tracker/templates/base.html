@@ -16,7 +16,9 @@
 	{% else %}
 	<script src="{{ STATIC_URL }}js/modernizr.js"></script>
 	{% endif %}
+	{% block style %}
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/tracker.css">
+	{% endblock style %}
 </head>
 <body>
 		<!--[if lt IE 8]>
@@ -86,6 +88,7 @@
 				</div>
 			</footer>
 
+			{% block scripts %}
 			{% if debug %}
 			<script src="{{ STATIC_URL }}components/jquery/dist/jquery.min.js"></script>
 			<script src="{{ STATIC_URL }}components/fastclick/lib/fastclick.js"></script>
@@ -94,5 +97,6 @@
 			{% else %}
 			<script src="{{ STATIC_URL }}js/app.built.js"></script>
 			{% endif %}
+			{% endblock scripts %}
 		</body>
 		</html>

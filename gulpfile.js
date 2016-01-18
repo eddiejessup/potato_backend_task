@@ -35,7 +35,12 @@ gulp.task('copy-styles', function () {
 });
 
 gulp.task('copy-js', function () {
-	gulp.src(baseSrcDir + '/components/modernizr/modernizr.js').pipe(gulp.dest(baseDestDir + '/js/'));
+	gulp.src([
+	        baseSrcDir + '/components/modernizr/modernizr.js',
+	        baseSrcDir + '/select2/js/select2.js',
+	        baseSrcDir + '/select2/js/select2.jquery_ready.js',
+        ])
+	    .pipe(gulp.dest(baseDestDir + '/js/'));
 });
 
 gulp.task('build', ['build-styles', 'copy-styles', 'copy-js', 'concat-js'])

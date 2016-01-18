@@ -53,6 +53,7 @@ INSTALLED_APPS = (
     'djangae.contrib.security',
     'crispy_forms',
     'crispy_forms_foundation',
+    'select2',
     'tracker',
     'tracker.site'
 )

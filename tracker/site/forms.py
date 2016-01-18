@@ -1,7 +1,7 @@
-from django import forms
 from django.contrib.auth import get_user_model
 
 from crispy_forms_foundation.forms import FoundationModelForm
+from select2.fields import ModelMultipleChoiceField
 
 from .models import Project, Ticket
 
@@ -43,7 +43,7 @@ class ProjectForm(BaseTrackerForm):
         instance.created_by = self.user
 
 
-class UserMultipleChoiceField(forms.ModelMultipleChoiceField):
+class UserMultipleChoiceField(ModelMultipleChoiceField):
     '''Display user choices more cleanly'''
 
     def label_from_instance(self, user):
@@ -51,7 +51,8 @@ class UserMultipleChoiceField(forms.ModelMultipleChoiceField):
 
 
 class TicketForm(BaseTrackerForm):
-    assignees = UserMultipleChoiceField(queryset=None, required=False)
+    assignees = UserMultipleChoiceField(name='user', model=get_user_model(),
+                                        queryset=None, required=False)
 
     class Meta:
         model = Ticket

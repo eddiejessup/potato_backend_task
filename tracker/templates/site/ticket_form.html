@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% block style %}
+{{ block.super }}
+{{ form.media.css }}
+{% endblock style %}
+
+{% block scripts %}
+{{ block.super }}
+{{ form.media.js }}
+{% endblock scripts %}
 
 {% block content %}
 <div class="large-8 large-centered columns">
