@@ -43,8 +43,15 @@ class ProjectForm(BaseTrackerForm):
         instance.created_by = self.user
 
 
+class UserMultipleChoiceField(forms.ModelMultipleChoiceField):
+    '''Display user choices more cleanly'''
+
+    def label_from_instance(self, user):
+        return user.email
+
+
 class TicketForm(BaseTrackerForm):
-    assignees = forms.ModelMultipleChoiceField(queryset=None, required=False)
+    assignees = UserMultipleChoiceField(queryset=None, required=False)
 
     class Meta:
         model = Ticket
