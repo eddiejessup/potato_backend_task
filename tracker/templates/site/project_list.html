@@ -6,6 +6,7 @@
 		<table>
 			<thead>
 				<tr>
+					<th></th>
 					<th width="1200">Project title</th>
 					<th>Tickets</th>
 					<th></th>
@@ -14,6 +15,7 @@
 			<tbody>
 				{% for project_detail in project_details|dictsortreversed:"assigned" %}
 				<tr>
+					<td>{% if project_detail.assigned %}<i class="fi-flag"></i>{% endif %}</td>
 					<td>{{ project_detail.project.title }}</td>
 					<td>{{ project_detail.project.tickets.all|length }}</td>
 					<td>
