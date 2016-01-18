@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django_extensions.db.models import TimeStampedModel
+from django.contrib.auth import get_user_model
 
 from djangae.fields import RelatedSetField
 
@@ -11,6 +12,14 @@ class Project(TimeStampedModel):
 
     def __str__(self):
         return self.title
+
+    @property
+    def assignees(self):
+        '''Users who are assigned to any related ticket'''
+        users = get_user_model().objects.none()
+        for ticket in self.tickets.all():
+            users |= ticket.assignees.all()
+        return users
 
 
 class Ticket(TimeStampedModel):

@@ -12,12 +12,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% for project in object_list %}
+				{% for project_detail in project_details|dictsortreversed:"assigned" %}
 				<tr>
-					<td>{{ project.title }}</td>
-					<td>{{ project.tickets.all|length }}</td>
+					<td>{{ project_detail.project.title }}</td>
+					<td>{{ project_detail.project.tickets.all|length }}</td>
 					<td>
-						<a href="{% url "project-update" project_id=project.pk %}">
+						<a href="{% url "project-update" project_id=project_detail.project.pk %}">
 							<i class="fi-pencil"></i>
 						</a>
 					</td>

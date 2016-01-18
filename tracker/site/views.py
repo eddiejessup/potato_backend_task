@@ -49,6 +49,14 @@ class ProjectListView(ListView):
     model = Project
     template_name = "site/project_list.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(ProjectListView, self).get_context_data(**kwargs)
+        context['project_details'] = [{
+            'project': project,
+            'assigned': self.request.user in project.assignees,
+        } for project in self.object_list]
+        return context
+
 
 project_list_view = ProjectListView.as_view()
 
