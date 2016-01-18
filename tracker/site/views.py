@@ -13,9 +13,8 @@ class ProjectContextMixin(object):
 
     def get_project(self):
         if not self.project:
-            self.project = get_object_or_404(
-                Project, pk=self.kwargs['project_id'])
-
+            self.project = get_object_or_404(Project,
+                                             pk=self.kwargs['project_id'])
         return self.project
 
     def get_context_data(self, **kwargs):
