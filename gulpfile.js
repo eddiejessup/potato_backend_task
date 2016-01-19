@@ -34,7 +34,7 @@ gulp.task('copy-foundation-fonts', function () {
 		.pipe(gulp.dest(cssSrcPath));
 });
 
-gulp.task('build-styles', ['sass', 'copy-foundation-fonts'])
+gulp.task('build-styles', ['sass', 'copy-foundation-fonts']);
 
 gulp.task('concat-js', function() {
 	gulp.src(jsConcatSrcPaths)
