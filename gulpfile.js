@@ -24,9 +24,11 @@ var cssDestPath = baseDestDir + '/css';
 var jsDestPath = baseDestDir + '/js';
 
 gulp.task('sass', function () {
-    gulp.src(scssSrcPath + '/*.scss')
+	// Return a stream to tell dependent events it has finished
+    var stream = gulp.src(scssSrcPath + '/*.scss')
         .pipe(sass())
         .pipe(gulp.dest(cssSrcPath));
+    return stream
 });
 
 gulp.task('copy-foundation-fonts', function () {
@@ -43,7 +45,8 @@ gulp.task('concat-js', function() {
 });
 
 
-gulp.task('copy-styles', function () {
+// Require 'sass' to finish before running
+gulp.task('copy-styles', ['sass'], function () {
 	gulp.src(cssSrcPath + '/*.css').pipe(gulp.dest(cssDestPath));
 });
 
@@ -51,5 +54,10 @@ gulp.task('copy-js', function () {
 	gulp.src(jsCopySrcPaths).pipe(gulp.dest(jsDestPath));
 });
 
+
+gulp.task('watch', function() {
+  gulp.watch(scssSrcPath + '/*.scss', ['sass', 'copy-styles']);
+});
+
 gulp.task('build', ['build-styles', 'copy-styles', 'copy-js', 'concat-js'])
-gulp.task('default', ['build-styles']);
+gulp.task('default', ['build-styles', 'watch']);
