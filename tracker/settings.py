@@ -151,3 +151,12 @@ CRISPY_TEMPLATE_PACK = 'foundation-5'
 AUTH_USER_MODEL = 'djangae.GaeUser'
 
 from djangae.contrib.gauth.settings import *
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'TIMEOUT': 30,
+    }
+}
+
+SERIALIZATION_FORMAT = 'json'
